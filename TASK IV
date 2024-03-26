@@ -1,0 +1,181 @@
+Here is my connect4 game I have designed!
+
+CONNECT4 GAME
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Connect Four</title>
+    <style>
+	.board {
+    display: flex;
+    flex-wrap: wrap;
+    width: 420px;
+    margin: 0 auto;
+}
+
+.cell {
+    width: 60px;
+    height: 60px;
+    border: 1px solid black;
+    box-sizing: border-box;
+    cursor: pointer;
+}
+
+.red {
+    background-color: red;
+}
+
+.yellow {
+    background-color: yellow;
+}
+
+	</style>
+</head>
+<body>
+    <h1>Connect Four</h1>
+    <div class="board">
+        <!-- The game board will be dynamically generated here -->
+    </div>
+    <script>
+	// Create a 2D array to represent the game board
+var board = [
+    [0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0]
+];
+
+// Variable to keep track of the current player
+var currentPlayer = 1;
+
+// Function to handle a player's move
+function makeMove(column) {
+    // Find the next available row in the selected column
+    for (var row = 5; row >= 0; row--) {
+        if (board[row][column] === 0) {
+            board[row][column] = currentPlayer;
+            break;
+        }
+    }
+
+    // Check for a win
+    if (checkWin(row, column)) {
+        alert("Player " + currentPlayer + " wins!");
+        resetGame();
+        return;
+    }
+
+    // Switch to the other player
+    currentPlayer = currentPlayer === 1 ? 2 : 1;
+
+    // Update the game board
+    updateBoard();
+}
+
+// Function to update the game board in the HTML
+function updateBoard() {
+    var boardDiv = document.querySelector('.board');
+    boardDiv.innerHTML = '';
+
+    for (var row = 0; row < 6; row++) {
+        for (var col = 0; col < 7; col++) {
+            var cellDiv = document.createElement('div');
+            cellDiv.classList.add('cell');
+
+            if (board[row][col] === 1) {
+                cellDiv.classList.add('red');
+            } else if (board[row][col] === 2) {
+                cellDiv.classList.add('yellow');
+            }
+
+            cellDiv.setAttribute('onclick', 'makeMove(' + col + ')');
+            boardDiv.appendChild(cellDiv);
+        }
+    }
+}
+
+// Function to check for a win
+function checkWin(row, col) {
+    // Check for a horizontal win
+    var count = 0;
+    for (var i = col - 3; i <= col + 3; i++) {
+        if (board[row][i] === currentPlayer) {
+            count++;
+            if (count === 4) {
+                return true;
+            }
+        } else {
+            count = 0;
+        }
+    }
+
+    // Check for a vertical win
+    count = 0;
+    for (var i = row - 3; i <= row + 3; i++) {
+        if (board[i] && board[i][col] === currentPlayer) {
+            count++;
+            if (count === 4) {
+                return true;
+            }
+        } else {
+            count = 0;
+        }
+    }
+
+    // Check for a diagonal win (top-left to bottom-right)
+    count = 0;
+    for (var i = -3; i <= 3; i++) {
+        var r = row + i;
+        var c = col + i;
+        if (board[r] && board[r][c] === currentPlayer) {
+            count++;
+            if (count === 4) {
+                return true;
+            }
+        } else {
+            count = 0;
+        }
+    }
+
+    // Check for a diagonal win (top-right to bottom-left)
+    count = 0;
+    for (var i = -3; i <= 3; i++) {
+        var r = row - i;
+        var c = col + i;
+        if (board[r] && board[r][c] === currentPlayer) {
+            count++;
+            if (count === 4) {
+                return true;
+            }
+        } else {
+            count = 0;
+        }
+    }
+
+    return false;
+}
+
+// Function to reset the game
+function resetGame() {
+    board = [
+        [0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0]
+    ];
+    currentPlayer = 1;
+    updateBoard();
+}
+
+// Initialize the game board
+updateBoard();
+
+	</script>
+</body>
+</html>
