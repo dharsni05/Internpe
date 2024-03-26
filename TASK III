@@ -1,0 +1,124 @@
+Here is my todolist i have created!!
+
+to_do_list.html
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>To-Do List</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+<body>
+<div class="todo">
+    <h1>To-Do List</h1>
+    <input type="text" id="taskInput" placeholder="Enter a task">
+    <button onclick="addTask()">Add Task</button>
+    <ul id="taskList"></ul>
+
+    <script src="script.js"></script>
+	</div>
+</body>
+</html>
+
+script.js
+
+var tasks = [];
+function addTask() {
+    var input = document.getElementById("taskInput");
+    var task = input.value;
+
+    if (task === "") {
+        alert("Please enter a task!");
+        return;
+    }
+
+    tasks.push(task);  
+    renderTasks();  
+    input.value = "";  
+}
+function renderTasks() {
+    var taskList = document.getElementById("taskList");
+    taskList.innerHTML = ""; 
+
+    tasks.forEach(function (task, index) {
+        var li = document.createElement("li");
+        li.appendChild(document.createTextNode(task));
+
+         
+        var deleteButton = document.createElement("button");
+        deleteButton.innerHTML = "Delete";
+        deleteButton.onclick = function () {
+            deleteTask(index);
+        };
+        li.appendChild(deleteButton);
+
+         
+        var updateButton = document.createElement("button");
+        updateButton.innerHTML = "Update";
+        updateButton.onclick = function () {
+            updateTask(index);
+        };
+        li.appendChild(updateButton);
+
+        taskList.appendChild(li);
+    });
+}
+
+ 
+function deleteTask(index) {
+    tasks.splice(index, 1);  
+    renderTasks();  
+}
+
+ 
+function updateTask(index) {
+    var newTask = prompt("Enter the updated task", tasks[index]);
+
+    if (newTask === null || newTask === "") {
+        return;
+    }
+
+    tasks[index] = newTask;  
+    renderTasks();  
+}
+
+script.css
+
+body {
+    font-family: Arial, sans-serif;
+}
+
+h1 {
+    text-align: center;
+}
+
+input[type="text"] {
+    width: 300px;
+    padding: 5px;
+}
+
+button {
+    padding: 5px 10px;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    margin: 5px 0;
+}
+
+li button {
+    margin-left: 5px;
+}
+.todo {
+            max-width: 400px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: lightblue;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
