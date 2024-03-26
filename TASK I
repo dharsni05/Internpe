@@ -1,0 +1,120 @@
+THIS IS CALCULATOR DESIGNED USING HTML,CSS,JS.
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Calculator</title>
+</head>
+<body>
+
+  <div class="calculator">
+
+    <input type="text" class="display" disabled>
+    <div class="keys">
+      <div class="row">
+        <button value="7">7</button>
+        <button value="8">8</button>
+        <button value="9">9</button>
+        <button value="+" class="operator">+</button>
+      </div>
+      <div class="row">
+        <button value="4">4</button>
+        <button value="5">5</button>
+        <button value="6">6</button>
+        <button value="-" class="operator">-</button>
+      </div>
+      <div class="row">
+        <button value="1">1</button>
+        <button value="2">2</button>
+        <button value="3">3</button>
+        <button value="*" class="operator">*</button>
+      </div>
+      <div class="row">
+        <button value="C" class="operator">C</button>
+        <button value="0">0</button>
+        <button value="/" class="operator">/</button>
+        <button value="=" class="operator">=</button>
+      </div>
+    </div>
+
+  </div>
+   
+</body>
+<style>
+
+button:hover {
+  cursor: pointer;
+}
+
+.operator {
+  background-color: #FFC0CB;
+  color: #000;
+}
+button{
+width:50px;
+height:50px;
+font-size:130%;
+border-radius: 5px;
+font-style:italic;
+font-weight:bold;
+ 
+box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+.row{
+margin:20px;
+position:relative;
+}
+input[type="text"], select {
+width:230px;
+height:30px;
+display: inline-block;
+padding: 10px;
+
+}
+
+.calculator
+{
+ max-width: 300px;
+ margin: 60px auto;
+ padding: 20px;
+ background-color: lightblue;
+ border-radius: 5px;
+ box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+}
+body{
+background-color:black;
+}
+</style>
+<script>
+
+
+  buttons = document.querySelectorAll('button');
+
+const display = document.querySelector('.display');
+
+buttons.forEach(function(button) {
+  button.addEventListener('click', calculate);
+});
+
+function calculate(event) {
+
+  const clickedButtonValue = event.target.value;
+
+  if (clickedButtonValue === '=') {
+
+    if (display.value !== '')
+    {
+      display.value = eval(display.value);
+    }
+  } else if (clickedButtonValue === 'C')
+  {
+    display.value = '';
+  } else {
+
+    display.value += clickedButtonValue;
+  }
+}
+
+</script>
+</html>
